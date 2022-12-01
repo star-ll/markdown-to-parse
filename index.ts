@@ -1,9 +1,16 @@
 import fs from "fs"
 import path from "path"
 import { parse } from "./src/parse/parse.js";
+import { transform } from "./src/transform/transform.js";
 
 const md = fs.readFileSync(path.resolve("./demo/hello.md")).toString();
 
-const result = parse(md)
+const ast = parse(md)
+console.log(ast.children[1]);
 
-console.log(result);
+const transformResult = transform(ast)
+// @ts-ignore
+console.log(transformResult.childNodes[1]);
+
+
+

@@ -1,4 +1,4 @@
-import { MdAst, MdAstType, RowType, TextAst } from "./ast.js";
+import {  MdAst,MdAstType, RowType, MdTextAst } from "./../types/ast.d";
 export type ParseContext = {
 	source: string;
 	originalSource: string;
@@ -103,7 +103,7 @@ function createRootAst(): MdAst {
 }
 
 function parseText(context: ParseContext, ancestors: MdAst[]): MdAst {
-	const textAst: TextAst = {
+	const textAst: MdTextAst = {
 		type: "Text",
 		rowType: RowType.Block,
 		children: [],
@@ -115,7 +115,7 @@ function parseText(context: ParseContext, ancestors: MdAst[]): MdAst {
 	return textAst;
 }
 
-function parseTextChild(context: ParseContext, parent: TextAst) {
+function parseTextChild(context: ParseContext, parent: MdTextAst) {
 	while (!/[\r\n\f]/.test(context.source[0]) && !isEnd(context)) {
 		if (context.source[0] === "*") {
 			parseStressText(context, parent);
@@ -128,7 +128,7 @@ function parseTextChild(context: ParseContext, parent: TextAst) {
 }
 
 // 解析 *
-function parseStressText(context: ParseContext, parent: TextAst) {
+function parseStressText(context: ParseContext, parent: MdTextAst) {
 	const pattern = /^([*]{1,3})([^*\r\n\f]+)([*]{1,3})/;
 	const matchText = context.source.match(pattern);
 	// **、***等情况，此时不当作强调语句处理
@@ -147,10 +147,10 @@ function parseStressText(context: ParseContext, parent: TextAst) {
 	let type: MdAstType = "Bold";
 	switch (leftStar.length) {
 		case 1:
-			type = "Bold";
+			type = "Italic";
 			break;
 		case 2:
-			type = "Italic";
+			type = "Bold";
 			break;
 		case 3:
 			type = "BoldAndItalic";
@@ -167,7 +167,7 @@ function parseStressText(context: ParseContext, parent: TextAst) {
 	advanceBy(context, leftStar.length + rightStar.length + value.length);
 	return stressAst;
 }
-function parseInlineCode(context: ParseContext, parent: TextAst) {
+function parseInlineCode(context: ParseContext, parent: MdTextAst) {
 	const pattern = /^[\`][^*\r\n\f]+[\`]/;
 	const matchText = context.source.match(pattern);
 	if (!matchText) {
@@ -185,13 +185,13 @@ function parseInlineCode(context: ParseContext, parent: TextAst) {
 }
 function parsePlainText(
 	context: ParseContext,
-	parent: TextAst,
+	parent: MdTextAst,
 	length?: number
 ) {
 	if (isEnd(context)) {
 		return;
 	}
-	debugger;
+
 	const pattern = /^[^\r\n\f`*]+/;
 	const matchText =
 		length == null

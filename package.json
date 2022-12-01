@@ -5,7 +5,7 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "tsc && node ./dist/index.js"
+    "dev": "ts-node --project ./tsconfig.json --esm ./index.ts"
   },
   "author": "",
   "license": "MIT",
@@ -17,6 +17,7 @@
     "eslint-plugin-import": "^2.25.2",
     "eslint-plugin-n": "^15.0.0",
     "eslint-plugin-promise": "^6.0.0",
+    "ts-node": "^10.9.1",
     "typescript": "*"
   },
   "dependencies": {}
