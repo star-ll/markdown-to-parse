@@ -6,7 +6,10 @@ export function transformPlainText(
 	context: TransformContext,
 	isPlugin = true
 ) {
-	if ((node.type !== "Text" || node.rowType !== RowType.Inline) && isPlugin == true) {
+	if (
+		(node.type !== "Text" || node.rowType !== RowType.Inline) &&
+		isPlugin == true
+	) {
 		return;
 	}
 
@@ -18,20 +21,16 @@ export function transformPlainText(
 	context.parent.childNodes[context.childIndex] = plainTextAst;
 }
 
-
-export function transformTextBlock(
-	node: MdAst,
-	context: TransformContext,
-){ 
-	if (node.type !== 'Text' || node.rowType !== RowType.Block) {
+export function transformTextBlock(node: MdAst, context: TransformContext) {
+	if (node.type !== "Text" || node.rowType !== RowType.Block) {
 		return;
 	}
 
 	const ast: ElementAst = {
-		nodeName: 'p',
-		tagName: 'p',
+		nodeName: "p",
+		tagName: "p",
 		attrs: [],
 		childNodes: [],
-	}
+	};
 	context.parent.childNodes[context.childIndex] = ast;
 }

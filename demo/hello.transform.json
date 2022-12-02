@@ -1,0 +1,198 @@
+{
+  "nodeName": "div",
+  "tagName": "div",
+  "childNodes": [
+    {
+      "nodeName": "h1",
+      "tagName": "h1",
+      "attrs": [],
+      "childNodes": [
+        {
+          "nodeName": "#text",
+          "value": "hello World"
+        }
+      ]
+    },
+    {
+      "nodeName": "p",
+      "tagName": "p",
+      "attrs": [],
+      "childNodes": [
+        {
+          "nodeName": "#text",
+          "value": "Hello "
+        },
+        {
+          "nodeName": "strong",
+          "tagName": "strong",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "#text",
+              "value": "Markdown"
+            }
+          ]
+        },
+        {
+          "nodeName": "#text",
+          "value": "."
+        }
+      ]
+    },
+    {
+      "nodeName": "p",
+      "tagName": "p",
+      "attrs": [],
+      "childNodes": [
+        {
+          "nodeName": "em",
+          "tagName": "em",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "#text",
+              "value": "I"
+            }
+          ]
+        },
+        {
+          "nodeName": "#text",
+          "value": " "
+        },
+        {
+          "nodeName": "strong",
+          "tagName": "strong",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "#text",
+              "value": "love"
+            }
+          ]
+        },
+        {
+          "nodeName": "#text",
+          "value": " "
+        },
+        {
+          "nodeName": "strong",
+          "tagName": "strong",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "em",
+              "tagName": "em",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "Markdown"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nodeName": "div",
+      "tagName": "div",
+      "attrs": [
+        {
+          "style": "border-left: 4px solid #c9c9c9;padding-left: 1rem;"
+        }
+      ],
+      "childNodes": [
+        {
+          "nodeName": "p",
+          "tagName": "p",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "#text",
+              "value": "这是一条引用"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nodeName": "div",
+      "tagName": "div",
+      "attrs": [
+        {
+          "style": "border-left: 4px solid #c9c9c9;padding-left: 1rem;"
+        }
+      ],
+      "childNodes": [
+        {
+          "nodeName": "p",
+          "tagName": "p",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "#text",
+              "value": "这是一条连续引用"
+            }
+          ]
+        },
+        {
+          "nodeName": "p",
+          "tagName": "p",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "#text",
+              "value": "这是一条连续引用"
+            }
+          ]
+        },
+        {
+          "nodeName": "p",
+          "tagName": "p",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "#text",
+              "value": "这是一条连续引用"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nodeName": "p",
+      "tagName": "p",
+      "attrs": [],
+      "childNodes": [
+        {
+          "nodeName": "#text",
+          "value": ">> 这是一条嵌套引用"
+        }
+      ]
+    },
+    {
+      "nodeName": "p",
+      "tagName": "p",
+      "attrs": [],
+      "childNodes": [
+        {
+          "nodeName": "#text",
+          "value": "这是行内代码"
+        },
+        {
+          "nodeName": "code",
+          "tagName": "code",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "#text",
+              "value": "code"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "attrs": []
+}

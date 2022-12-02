@@ -1,4 +1,5 @@
-import {  MdAst,MdAstType, RowType, MdTextAst } from "./../types/ast.d";
+import { Context } from "./../types/index.d";
+import { MdAst, MdAstType, RowType, MdTextAst } from "./../types/ast.d";
 export type ParseContext = {
 	source: string;
 	originalSource: string;
@@ -20,21 +21,19 @@ export function parse(md: string) {
 }
 
 export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
-	const pattern = /[ \t\r\n\f]/;
+	const pattern = /^[\r\n\f]/;
 
 	while (!isEnd(context)) {
 		let node: MdAst | undefined;
 		const parent = ancestors[ancestors.length - 1];
 
 		if (pattern.test(context.source[0])) {
-			// if (/[\r\n\f]/.test(context.source[0])) {
-
-			// }
-
 			advanceBy(context, 1);
 			continue;
 		} else if (context.source[0] === "#") {
 			node = parseTitle(context, ancestors);
+		} else if (context.source[0] === ">") {
+			node = parseQuote(context, ancestors);
 		}
 
 		if (!node) {
@@ -58,6 +57,7 @@ export function parseTitle(context: ParseContext, ancestors: MdAst[]) {
 	let titleLevel = 0;
 	let value = "";
 	while (context.source[0] === "#") {
+		// Title Level State
 		titleLevel++;
 		advanceBy(context, 1);
 	}
@@ -75,6 +75,7 @@ export function parseTitle(context: ParseContext, ancestors: MdAst[]) {
 }
 
 function parseTitleValue(context: ParseContext): string {
+	// Title Value State
 	// 标题后面所有字符都当成普通字符处理
 	let pattern = /[\r\n\f]/;
 	let value = "";
@@ -93,6 +94,13 @@ function advanceBy(context: ParseContext, length: number) {
 function isEnd(context: ParseContext) {
 	return context.source.length === 0;
 }
+function isNext(context: ParseContext) {
+	return (
+		/^\r\r/.test(context.source) ||
+		/^\n\n/.test(context.source) ||
+		/^\r\n\r\n/.test(context.source)
+	);
+}
 
 function createRootAst(): MdAst {
 	return {
@@ -103,6 +111,7 @@ function createRootAst(): MdAst {
 }
 
 function parseText(context: ParseContext, ancestors: MdAst[]): MdAst {
+	// Text State
 	const textAst: MdTextAst = {
 		type: "Text",
 		rowType: RowType.Block,
@@ -129,6 +138,7 @@ function parseTextChild(context: ParseContext, parent: MdTextAst) {
 
 // 解析 *
 function parseStressText(context: ParseContext, parent: MdTextAst) {
+	// Stress Text State
 	const pattern = /^([*]{1,3})([^*\r\n\f]+)([*]{1,3})/;
 	const matchText = context.source.match(pattern);
 	// **、***等情况，此时不当作强调语句处理
@@ -168,7 +178,8 @@ function parseStressText(context: ParseContext, parent: MdTextAst) {
 	return stressAst;
 }
 function parseInlineCode(context: ParseContext, parent: MdTextAst) {
-	const pattern = /^[\`][^*\r\n\f]+[\`]/;
+	// Inline Code State
+	const pattern = /^[\`]([^*\r\n\f]+)[\`]/;
 	const matchText = context.source.match(pattern);
 	if (!matchText) {
 		throw new Error("matchText异常");
@@ -177,7 +188,7 @@ function parseInlineCode(context: ParseContext, parent: MdTextAst) {
 		rowType: RowType.Inline,
 		type: "Code",
 		children: [],
-		value: (matchText && matchText[0]) || "",
+		value: (matchText && matchText[1]) || "",
 	};
 	parent.children.push(codeAst);
 	advanceBy(context, matchText[0].length);
@@ -188,6 +199,7 @@ function parsePlainText(
 	parent: MdTextAst,
 	length?: number
 ) {
+	// Plain Text State
 	if (isEnd(context)) {
 		return;
 	}
@@ -209,4 +221,35 @@ function parsePlainText(
 	parent.children.push(plainTextAst);
 	advanceBy(context, matchText[0].length);
 	return plainTextAst;
+}
+
+function parseQuote(context: ParseContext, ancestors: MdAst[]) {
+	if (!context.source.startsWith("> ")) {
+		return parseText(context, ancestors);
+	}
+	// Quote State
+	const quoteAst: MdAst = {
+		type: "Quote",
+		rowType: RowType.Block,
+		children: [],
+	};
+
+	let source = "";
+	while (!isNext(context) && !isEnd(context)) {
+		let s = context.source.match(/.+/)?.[0] || "";
+		advanceBy(context, s.length);
+		source += s.slice(2) + "\n"; // remove '> '
+	}
+
+	ancestors.push(quoteAst);
+	parseMarkdown(
+		{
+			...context,
+			source,
+		},
+		ancestors
+	);
+	ancestors.pop();
+	// advanceBy(context, source.length)
+	return quoteAst;
 }

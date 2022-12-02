@@ -6,10 +6,10 @@ export function transformItalic(node: MdAst, context: TransformContext) {
 	if (node.type !== "Italic") {
 		return;
 	}
-	debugger;
+
 	const ast: ElementAst = {
-		nodeName: "i",
-		tagName: "i",
+		nodeName: "em",
+		tagName: "em",
 		attrs: [],
 		childNodes: [],
 	};
@@ -24,8 +24,8 @@ export function transformBold(node: MdAst, context: TransformContext) {
 	}
 
 	const ast: ElementAst = {
-		nodeName: "b",
-		tagName: "b",
+		nodeName: "strong",
+		tagName: "strong",
 		attrs: [],
 		childNodes: [],
 	};
@@ -39,13 +39,13 @@ export function transformBoldAndItalic(node: MdAst, context: TransformContext) {
 	}
 
 	const ast: ElementAst = {
-		nodeName: "b",
-		tagName: "b",
+		nodeName: "strong",
+		tagName: "strong",
 		attrs: [],
 		childNodes: [
 			{
-				nodeName: "i",
-				tagName: "i",
+				nodeName: "em",
+				tagName: "em",
 				attrs: [],
 				childNodes: [
 					{

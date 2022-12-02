@@ -1,12 +1,13 @@
 import { TransformContext } from "../types";
 import { ElementAst, HtmlAst, MdAst } from "../types/ast.d";
-import { transformCode } from "./plugins/code.js";
+import { transformInlineCode } from "./plugins/code.js";
+import { transformQuote } from "./plugins/quote.js";
 import { transformBold, transformBoldAndItalic, transformItalic } from "./plugins/stress.js";
 import { transformPlainText, transformTextBlock } from "./plugins/text.js";
 import { transformTitle } from "./plugins/title.js";
 
 export function transform(ast: MdAst) {
-	const context = createContext(ast);
+	const context = createTransformContext(ast);
 	const root = context.mdAst;
 	return baseTransform(root, context);
 }
@@ -26,6 +27,7 @@ export function baseTransform(node: MdAst, context: TransformContext) {
 				context.childIndex
 			] as ElementAst;
 		}
+
 		baseTransform(child, {
 			...context,
 			childIndex: i,
@@ -36,7 +38,7 @@ export function baseTransform(node: MdAst, context: TransformContext) {
 	return context.rootAst;
 }
 
-function createContext(ast: MdAst): TransformContext {
+function createTransformContext(ast: MdAst): TransformContext {
 	const rootAst = createRootAst();
 	return {
 		// MdAst
@@ -47,10 +49,11 @@ function createContext(ast: MdAst): TransformContext {
 		parent: rootAst,
 		childIndex: 0,
 		transformPlugins: [
+			transformQuote,
 			transformBold,
 			transformItalic,
 			transformBoldAndItalic,
-			transformCode,
+			transformInlineCode,
 			transformTextBlock,
 			transformTitle,
 			transformPlainText,

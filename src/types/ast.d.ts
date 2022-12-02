@@ -11,7 +11,8 @@ export type MdAstType =
 	| "Italic"
 	| "BoldAndItalic"
 	| "Underline"
-	| "Code";
+	| "Code"
+	| "Quote";
 
 export const enum RowType {
 	Root,
@@ -36,13 +37,13 @@ export type MdTextAst = Omit<MdAst, "value">;
 export type ElementAst = {
 	nodeName: string;
 	tagName: string;
-	attrs: [];
+	attrs: any[];
 	childNodes: (ElementAst | TextAst)[];
 };
 
 export type TextAst = {
-	nodeName: '#text';
+	nodeName: "#text";
 	value: string;
 };
 
-export type HtmlAst = ElementAst | TextAst
+export type HtmlAst = ElementAst | TextAst;
