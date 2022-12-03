@@ -1,4 +1,3 @@
-import { Context } from "./../types/index.d";
 import { MdAst, MdAstType, RowType, MdTextAst } from "./../types/ast.d";
 export type ParseContext = {
 	source: string;
@@ -7,7 +6,7 @@ export type ParseContext = {
 
 export function createParseContext(source: string): ParseContext {
 	const context = {
-		source,
+		source: source.replace(/\r\n/g, "\n"),
 		originalSource: source,
 	};
 	return context;
@@ -34,22 +33,20 @@ export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
 			node = parseTitle(context, ancestors);
 		} else if (context.source[0] === ">") {
 			node = parseQuote(context, ancestors);
+		} else if (/[0-9]/.test(context.source[0])) {
+			node = parseOrderedList(context, ancestors);
+		} else if (/\-/.test(context.source[0])) {
+			node = parseUnOrderedList(context, ancestors);
 		}
 
 		if (!node) {
+			debugger;
 			node = parseText(context, ancestors);
 		}
 
-		// if (parent && typeof node !== "undefined") {
-		// 	parent.children.push(node);
-		// }
-		// if (node) {
-		// 	ancestors.pop();
-		// }
 		if (node) {
 			parent.children.push(node);
 		}
-		// advanceBy(context, 1)
 	}
 }
 
@@ -252,4 +249,104 @@ function parseQuote(context: ParseContext, ancestors: MdAst[]) {
 	ancestors.pop();
 	// advanceBy(context, source.length)
 	return quoteAst;
+}
+
+export function parseOrderedList(context: ParseContext, ancestors: MdAst[]) {
+	const pattern = /^([0-9]+)\.\s/;
+	const matchText = pattern.exec(context.source);
+	if (!matchText) {
+		// 不符合语法规则，当成普通文本处理
+		return;
+	}
+	// Ordered List State
+	const orderedListAst: MdAst = {
+		type: "OrderedList",
+		rowType: RowType.Block,
+		children: [],
+		meta: {
+			start: matchText[1],
+		},
+	};
+	ancestors.push(orderedListAst);
+
+	const source = /[0-9]\.\s+(.[\r\n]?)*/.exec(context.source)?.[0] || "";
+	advanceBy(context, source.length);
+	const arr = source.replace(/\r/g, "\n").split("\n");
+	arr.forEach((item, index) => {
+		if (!/^[0-9]+\.\s+/.test(item)) {
+			arr[index - 1] += "\n" + item;
+			arr[index] = "";
+		}
+	});
+	const children = arr.filter((i) => !!i && !/^[\r\n\s\t]*$/.test(i));
+	for (let i = 0; i < children.length; i++) {
+		const orderedListItemAst: MdAst = {
+			type: "OrderedListItem",
+			rowType: RowType.Block,
+			children: [],
+		};
+		ancestors.push(orderedListItemAst);
+		orderedListAst.children.push(orderedListItemAst);
+		const matchOrder = /^[0-9]+\.\s+/.exec(children[i])?.[0] || "";
+		parseMarkdown(
+			{
+				...context,
+				source: children[i].slice(matchOrder.length),
+			},
+			ancestors
+		);
+		ancestors.pop();
+	}
+
+	ancestors.pop();
+
+	return orderedListAst;
+}
+
+export function parseUnOrderedList(context: ParseContext, ancestors: MdAst[]) {
+	const pattern = /^\-\s/;
+	if (!pattern.test(context.source)) {
+		// 不符合语法规则，当成普通文本处理
+		return;
+	}
+	// Ordered List State
+	const unorderedListAst: MdAst = {
+		type: "UnorderedList",
+		rowType: RowType.Block,
+		children: [],
+	};
+	ancestors.push(unorderedListAst);
+
+	const source = /\-\s+(.[\r\n]?)*/.exec(context.source)?.[0] || "";
+	advanceBy(context, source.length);
+	const arr = source.replace(/\r/g, "\n").split("\n");
+	arr.forEach((item, index) => {
+		if (!/^\-\s+/.test(item)) {
+			arr[index - 1] += "\n" + item;
+			arr[index] = "";
+		}
+	});
+	const children = arr.filter((i) => !!i && !/^[\r\n\s\t]*$/.test(i));
+	for (let i = 0; i < children.length; i++) {
+		const orderedListItemAst: MdAst = {
+			type: "UnorderedListItem",
+			rowType: RowType.Block,
+			children: [],
+		};
+		ancestors.push(orderedListItemAst);
+		unorderedListAst.children.push(orderedListItemAst);
+		const matchOrder = /^\-\s+/.exec(children[i])?.[0] || "";
+		parseMarkdown(
+			{
+				...context,
+				source: children[i].slice(matchOrder.length),
+			},
+			ancestors
+		);
+		ancestors.pop();
+	}
+
+	ancestors.pop();
+
+	return unorderedListAst;
 }

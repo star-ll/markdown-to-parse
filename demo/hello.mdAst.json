@@ -37,15 +37,9 @@
       "rowType": 1,
       "children": [
         {
-          "type": "Italic",
-          "rowType": 2,
-          "value": "I",
-          "children": []
-        },
-        {
           "rowType": 2,
           "type": "Text",
-          "value": " ",
+          "value": "I ",
           "children": []
         },
         {
@@ -97,7 +91,7 @@
             {
               "rowType": 2,
               "type": "Text",
-              "value": "这是一条连续引用",
+              "value": "这是一条连续引用 1",
               "children": []
             }
           ]
@@ -109,7 +103,7 @@
             {
               "rowType": 2,
               "type": "Text",
-              "value": "这是一条连续引用",
+              "value": "这是一条连续引用 2",
               "children": []
             }
           ]
@@ -121,22 +115,46 @@
             {
               "rowType": 2,
               "type": "Text",
-              "value": "这是一条连续引用",
+              "value": "这是一条连续引用 3",
               "children": []
             }
           ]
-        }
-      ]
-    },
-    {
-      "type": "Text",
-      "rowType": 1,
-      "children": [
+        },
         {
-          "rowType": 2,
           "type": "Text",
-          "value": ">> 这是一条嵌套引用",
-          "children": []
+          "rowType": 1,
+          "children": [
+            {
+              "rowType": 2,
+              "type": "Text",
+              "value": "这是一条连续引用 4",
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Text",
+          "rowType": 1,
+          "children": [
+            {
+              "rowType": 2,
+              "type": "Text",
+              "value": "这是一条连续引用 5",
+              "children": []
+            }
+          ]
+        },
+        {
+          "type": "Text",
+          "rowType": 1,
+          "children": [
+            {
+              "rowType": 2,
+              "type": "Text",
+              "value": "这是一条连续引用 6",
+              "children": []
+            }
+          ]
         }
       ]
     },
@@ -155,6 +173,225 @@
           "type": "Code",
           "children": [],
           "value": "code"
+        }
+      ]
+    },
+    {
+      "type": "OrderedList",
+      "rowType": 1,
+      "children": [
+        {
+          "type": "OrderedListItem",
+          "rowType": 1,
+          "children": [
+            {
+              "type": "Text",
+              "rowType": 1,
+              "children": [
+                {
+                  "rowType": 2,
+                  "type": "Text",
+                  "value": "这是一条有序列表",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "OrderedListItem",
+          "rowType": 1,
+          "children": [
+            {
+              "type": "Text",
+              "rowType": 1,
+              "children": [
+                {
+                  "rowType": 2,
+                  "type": "Text",
+                  "value": "这是一条有序列表",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "OrderedListItem",
+          "rowType": 1,
+          "children": [
+            {
+              "type": "Text",
+              "rowType": 1,
+              "children": [
+                {
+                  "rowType": 2,
+                  "type": "Text",
+                  "value": "这是一条有序列表",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "type": "Text",
+              "rowType": 1,
+              "children": [
+                {
+                  "rowType": 2,
+                  "type": "Text",
+                  "value": "   这是一条有序列表",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "start": "1"
+      }
+    },
+    {
+      "type": "OrderedList",
+      "rowType": 1,
+      "children": [
+        {
+          "type": "OrderedListItem",
+          "rowType": 1,
+          "children": [
+            {
+              "type": "OrderedList",
+              "rowType": 1,
+              "children": [
+                {
+                  "type": "OrderedListItem",
+                  "rowType": 1,
+                  "children": [
+                    {
+                      "type": "Text",
+                      "rowType": 1,
+                      "children": [
+                        {
+                          "rowType": 2,
+                          "type": "Text",
+                          "value": "这是一条嵌套有序列表",
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ],
+              "meta": {
+                "start": "1"
+              }
+            }
+          ]
+        }
+      ],
+      "meta": {
+        "start": "4"
+      }
+    },
+    {
+      "type": "UnorderedList",
+      "rowType": 1,
+      "children": [
+        {
+          "type": "UnorderedListItem",
+          "rowType": 1,
+          "children": [
+            {
+              "type": "Text",
+              "rowType": 1,
+              "children": [
+                {
+                  "rowType": 2,
+                  "type": "Text",
+                  "value": "这是一条无序列表",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "UnorderedListItem",
+          "rowType": 1,
+          "children": [
+            {
+              "type": "Text",
+              "rowType": 1,
+              "children": [
+                {
+                  "rowType": 2,
+                  "type": "Text",
+                  "value": "这是一条无序列表",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "UnorderedListItem",
+          "rowType": 1,
+          "children": [
+            {
+              "type": "Text",
+              "rowType": 1,
+              "children": [
+                {
+                  "rowType": 2,
+                  "type": "Text",
+                  "value": "这是一条无序列表",
+                  "children": []
+                }
+              ]
+            },
+            {
+              "type": "Text",
+              "rowType": 1,
+              "children": [
+                {
+                  "rowType": 2,
+                  "type": "Text",
+                  "value": "    这是一条无序列表",
+                  "children": []
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "type": "UnorderedListItem",
+          "rowType": 1,
+          "children": [
+            {
+              "type": "UnorderedList",
+              "rowType": 1,
+              "children": [
+                {
+                  "type": "UnorderedListItem",
+                  "rowType": 1,
+                  "children": [
+                    {
+                      "type": "Text",
+                      "rowType": 1,
+                      "children": [
+                        {
+                          "rowType": 2,
+                          "type": "Text",
+                          "value": "这是一条嵌套无序列表",
+                          "children": []
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
         }
       ]
     }

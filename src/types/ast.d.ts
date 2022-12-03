@@ -12,7 +12,11 @@ export type MdAstType =
 	| "BoldAndItalic"
 	| "Underline"
 	| "Code"
-	| "Quote";
+	| "Quote"
+	| "OrderedList"
+	| "OrderedListItem"
+	| "UnorderedList"
+	| "UnorderedListItem";
 
 export const enum RowType {
 	Root,
@@ -28,6 +32,7 @@ export interface MdAst {
 	rowType: RowType;
 	value?: string;
 	children: MdAst[];
+	meta?: { [name: string]: any };
 }
 
 export type MdTextAst = Omit<MdAst, "value">;

@@ -1,10 +1,19 @@
 import { TransformContext } from "../types";
 import { ElementAst, HtmlAst, MdAst } from "../types/ast.d";
 import { transformInlineCode } from "./plugins/code.js";
+import {
+	transformOrderedList,
+	transformOrderedListItem,
+} from "./plugins/orderedList.js";
 import { transformQuote } from "./plugins/quote.js";
-import { transformBold, transformBoldAndItalic, transformItalic } from "./plugins/stress.js";
+import {
+	transformBold,
+	transformBoldAndItalic,
+	transformItalic,
+} from "./plugins/stress.js";
 import { transformPlainText, transformTextBlock } from "./plugins/text.js";
 import { transformTitle } from "./plugins/title.js";
+import { transformUnorderedList, transformUnorderedListItem } from "./plugins/unorderedList.js";
 
 export function transform(ast: MdAst) {
 	const context = createTransformContext(ast);
@@ -31,7 +40,7 @@ export function baseTransform(node: MdAst, context: TransformContext) {
 		baseTransform(child, {
 			...context,
 			childIndex: i,
-			parentMdAst: node
+			parentMdAst: node,
 		});
 		context.parent = parent;
 	}
@@ -49,6 +58,10 @@ function createTransformContext(ast: MdAst): TransformContext {
 		parent: rootAst,
 		childIndex: 0,
 		transformPlugins: [
+			transformUnorderedList,
+			transformUnorderedListItem,
+			transformOrderedList,
+			transformOrderedListItem,
 			transformQuote,
 			transformBold,
 			transformItalic,

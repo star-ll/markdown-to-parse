@@ -45,19 +45,8 @@
       "attrs": [],
       "childNodes": [
         {
-          "nodeName": "em",
-          "tagName": "em",
-          "attrs": [],
-          "childNodes": [
-            {
-              "nodeName": "#text",
-              "value": "I"
-            }
-          ]
-        },
-        {
           "nodeName": "#text",
-          "value": " "
+          "value": "I "
         },
         {
           "nodeName": "strong",
@@ -132,7 +121,7 @@
           "childNodes": [
             {
               "nodeName": "#text",
-              "value": "这是一条连续引用"
+              "value": "这是一条连续引用 1"
             }
           ]
         },
@@ -143,7 +132,7 @@
           "childNodes": [
             {
               "nodeName": "#text",
-              "value": "这是一条连续引用"
+              "value": "这是一条连续引用 2"
             }
           ]
         },
@@ -154,20 +143,42 @@
           "childNodes": [
             {
               "nodeName": "#text",
-              "value": "这是一条连续引用"
+              "value": "这是一条连续引用 3"
             }
           ]
-        }
-      ]
-    },
-    {
-      "nodeName": "p",
-      "tagName": "p",
-      "attrs": [],
-      "childNodes": [
+        },
         {
-          "nodeName": "#text",
-          "value": ">> 这是一条嵌套引用"
+          "nodeName": "p",
+          "tagName": "p",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "#text",
+              "value": "这是一条连续引用 4"
+            }
+          ]
+        },
+        {
+          "nodeName": "p",
+          "tagName": "p",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "#text",
+              "value": "这是一条连续引用 5"
+            }
+          ]
+        },
+        {
+          "nodeName": "p",
+          "tagName": "p",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "#text",
+              "value": "这是一条连续引用 6"
+            }
+          ]
         }
       ]
     },
@@ -188,6 +199,233 @@
             {
               "nodeName": "#text",
               "value": "code"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nodeName": "ol",
+      "tagName": "ol",
+      "attrs": [
+        {
+          "start": "1"
+        }
+      ],
+      "childNodes": [
+        {
+          "nodeName": "li",
+          "tagName": "li",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "p",
+              "tagName": "p",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "这是一条有序列表"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "nodeName": "li",
+          "tagName": "li",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "p",
+              "tagName": "p",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "这是一条有序列表"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "nodeName": "li",
+          "tagName": "li",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "p",
+              "tagName": "p",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "这是一条有序列表"
+                }
+              ]
+            },
+            {
+              "nodeName": "p",
+              "tagName": "p",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "   这是一条有序列表"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nodeName": "ol",
+      "tagName": "ol",
+      "attrs": [
+        {
+          "start": "4"
+        }
+      ],
+      "childNodes": [
+        {
+          "nodeName": "li",
+          "tagName": "li",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "ol",
+              "tagName": "ol",
+              "attrs": [
+                {
+                  "start": "1"
+                }
+              ],
+              "childNodes": [
+                {
+                  "nodeName": "li",
+                  "tagName": "li",
+                  "attrs": [],
+                  "childNodes": [
+                    {
+                      "nodeName": "p",
+                      "tagName": "p",
+                      "attrs": [],
+                      "childNodes": [
+                        {
+                          "nodeName": "#text",
+                          "value": "这是一条嵌套有序列表"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "nodeName": "ul",
+      "tagName": "ul",
+      "attrs": [],
+      "childNodes": [
+        {
+          "nodeName": "li",
+          "tagName": "li",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "p",
+              "tagName": "p",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "这是一条无序列表"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "nodeName": "li",
+          "tagName": "li",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "p",
+              "tagName": "p",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "这是一条无序列表"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "nodeName": "li",
+          "tagName": "li",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "p",
+              "tagName": "p",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "这是一条无序列表"
+                }
+              ]
+            },
+            {
+              "nodeName": "p",
+              "tagName": "p",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "    这是一条无序列表"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "nodeName": "li",
+          "tagName": "li",
+          "attrs": [],
+          "childNodes": [
+            {
+              "nodeName": "ul",
+              "tagName": "ul",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "li",
+                  "tagName": "li",
+                  "attrs": [],
+                  "childNodes": [
+                    {
+                      "nodeName": "p",
+                      "tagName": "p",
+                      "attrs": [],
+                      "childNodes": [
+                        {
+                          "nodeName": "#text",
+                          "value": "这是一条嵌套无序列表"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
             }
           ]
         }
