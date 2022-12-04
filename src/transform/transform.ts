@@ -1,6 +1,7 @@
 import { TransformContext } from "../types";
 import { ElementAst, HtmlAst, MdAst } from "../types/ast.d";
 import { transformInlineCode } from "./plugins/code.js";
+import { transformImage } from "./plugins/image.js";
 import {
 	transformOrderedList,
 	transformOrderedListItem,
@@ -58,6 +59,7 @@ function createTransformContext(ast: MdAst): TransformContext {
 		parent: rootAst,
 		childIndex: 0,
 		transformPlugins: [
+			transformImage,
 			transformUnorderedList,
 			transformUnorderedListItem,
 			transformOrderedList,
