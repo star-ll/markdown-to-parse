@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev": "ts-node --project ./tsconfig.json --esm ./index.ts"
+    "dev": "ts-node --project ./tsconfig.json --esm ./test.ts",
+    "build": "tsc",
+    "playground": "tsc &&  node ./playground/server.js"
   },
   "author": "",
   "license": "MIT",

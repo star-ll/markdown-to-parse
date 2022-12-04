@@ -26,9 +26,12 @@ export function transformTextBlock(node: MdAst, context: TransformContext) {
 		return;
 	}
 
+	// 两个p标签不能嵌套
+	const tagName = context.parentMdAst.rowType === RowType.Root ? "p" : "div";
+
 	const ast: ElementAst = {
-		nodeName: "p",
-		tagName: "p",
+		nodeName: tagName,
+		tagName,
 		attrs: [],
 		childNodes: [],
 	};

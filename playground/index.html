@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>markdown演练场</title>
+    <style>
+        body,
+        html {
+            margin: 0;
+            padding: 0;
+        }
+
+        .playground-box {
+            height: 100vh;
+            display: flex;
+        }
+
+        .user-input>textarea {
+            height: 100%;
+            width: 50vw;
+            padding: 0.7em 1em;
+            box-sizing: border-box;
+        }
+
+        .parse-box {
+            height: 100vh;
+            overflow-y: auto;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="playground-box">
+        <div class="user-input">
+            <textarea id="userInput"></textarea>
+        </div>
+        <div class="parse-box">
+            <div class="parse-result" id="parseResult"></div>
+        </div>
+    </div>
+
+</body>
+<script type="module">
+    import {parse, transform,generate} from "/dist/index.js"
+    const userInputEl = document.querySelector("#userInput")
+    const parseResultEl = document.querySelector("#parseResult")
+    function onChange(e){
+        // console.log();
+        if(e.key === 'Enter'){
+        const ast = parse(e.currentTarget.value);
+        console.log('ast',ast);
+        const htmlAst = transform(ast)
+        console.log('htmlAst',htmlAst);
+        const html = generate(htmlAst)
+        console.log('html',html);
+        parseResultEl.innerHTML = html
+        }
+        
+    }
+    userInputEl.addEventListener("keyup",onChange)
+</script>
+
+</html>

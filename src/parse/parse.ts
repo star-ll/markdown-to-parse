@@ -1,4 +1,6 @@
 import { MdAst, MdAstType, RowType, MdTextAst } from "./../types/ast.d";
+import { parseImage } from "./img.js";
+import { parseText, parseTitle } from "./text.js";
 export type ParseContext = {
 	source: string;
 	originalSource: string;
@@ -37,10 +39,11 @@ export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
 			node = parseOrderedList(context, ancestors);
 		} else if (/\-/.test(context.source[0])) {
 			node = parseUnOrderedList(context, ancestors);
+		} else if (context.source[0] === "!") {
+			node = parseExclamatory(context, ancestors);
 		}
 
 		if (!node) {
-			debugger;
 			node = parseText(context, ancestors);
 		}
 
@@ -50,48 +53,14 @@ export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
 	}
 }
 
-export function parseTitle(context: ParseContext, ancestors: MdAst[]) {
-	let titleLevel = 0;
-	let value = "";
-	while (context.source[0] === "#") {
-		// Title Level State
-		titleLevel++;
-		advanceBy(context, 1);
-	}
-	if (context.source[0] === " ") {
-		advanceBy(context, 1);
-		value = parseTitleValue(context);
-	}
-
-	return {
-		type: ("Title" + titleLevel) as MdAstType,
-		rowType: RowType.Block,
-		value: value,
-		children: [],
-	};
-}
-
-function parseTitleValue(context: ParseContext): string {
-	// Title Value State
-	// 标题后面所有字符都当成普通字符处理
-	let pattern = /[\r\n\f]/;
-	let value = "";
-	while (!pattern.test(context.source[0])) {
-		value += context.source[0];
-		advanceBy(context, 1);
-	}
-
-	return value;
-}
-
-function advanceBy(context: ParseContext, length: number) {
+export function advanceBy(context: ParseContext, length: number) {
 	context.source = context.source.slice(length);
 }
 
-function isEnd(context: ParseContext) {
+export function isEnd(context: ParseContext) {
 	return context.source.length === 0;
 }
-function isNext(context: ParseContext) {
+export function isNext(context: ParseContext) {
 	return (
 		/^\r\r/.test(context.source) ||
 		/^\n\n/.test(context.source) ||
@@ -107,122 +76,19 @@ function createRootAst(): MdAst {
 	};
 }
 
-function parseText(context: ParseContext, ancestors: MdAst[]): MdAst {
-	// Text State
-	const textAst: MdTextAst = {
-		type: "Text",
-		rowType: RowType.Block,
-		children: [],
-	};
-
-	parseTextChild(context, textAst);
-
-	// advanceBy(context, (text && text[0].length) || 0);
-	return textAst;
-}
-
-function parseTextChild(context: ParseContext, parent: MdTextAst) {
-	while (!/[\r\n\f]/.test(context.source[0]) && !isEnd(context)) {
-		if (context.source[0] === "*") {
-			parseStressText(context, parent);
-		} else if (context.source[0] === "`") {
-			parseInlineCode(context, parent);
-		} else {
-			parsePlainText(context, parent);
-		}
-	}
-}
-
-// 解析 *
-function parseStressText(context: ParseContext, parent: MdTextAst) {
-	// Stress Text State
-	const pattern = /^([*]{1,3})([^*\r\n\f]+)([*]{1,3})/;
-	const matchText = context.source.match(pattern);
-	// **、***等情况，此时不当作强调语句处理
-	if (!matchText) {
-		return parsePlainText(context, parent);
-	}
-	let [matchSource, leftStar, value, rightStar] = matchText;
-	if (leftStar.length > rightStar.length) {
-		const len = Math.abs(leftStar.length - rightStar.length);
-		parsePlainText(context, parent, len);
-		leftStar = leftStar.slice(len);
-	} else if (leftStar.length < rightStar.length) {
-		rightStar = rightStar.slice(0, leftStar.length);
+function parseExclamatory(context: ParseContext, ancestors: MdAst[]) {
+	if (/^\!\[/.test(context.source)) {
+		return parseImage(context, ancestors);
 	}
 
-	let type: MdAstType = "Bold";
-	switch (leftStar.length) {
-		case 1:
-			type = "Italic";
-			break;
-		case 2:
-			type = "Bold";
-			break;
-		case 3:
-			type = "BoldAndItalic";
-			break;
-	}
-
-	const stressAst: MdAst = {
-		type,
-		rowType: RowType.Inline,
-		value,
-		children: [],
-	};
-	parent.children.push(stressAst);
-	advanceBy(context, leftStar.length + rightStar.length + value.length);
-	return stressAst;
-}
-function parseInlineCode(context: ParseContext, parent: MdTextAst) {
-	// Inline Code State
-	const pattern = /^[\`]([^*\r\n\f]+)[\`]/;
-	const matchText = context.source.match(pattern);
-	if (!matchText) {
-		throw new Error("matchText异常");
-	}
-	const codeAst: MdAst = {
-		rowType: RowType.Inline,
-		type: "Code",
-		children: [],
-		value: (matchText && matchText[1]) || "",
-	};
-	parent.children.push(codeAst);
-	advanceBy(context, matchText[0].length);
-	return codeAst;
-}
-function parsePlainText(
-	context: ParseContext,
-	parent: MdTextAst,
-	length?: number
-) {
-	// Plain Text State
-	if (isEnd(context)) {
-		return;
-	}
-
-	const pattern = /^[^\r\n\f`*]+/;
-	const matchText =
-		length == null
-			? context.source.match(pattern)
-			: context.source.slice(0, length);
-	if (!matchText) {
-		throw new Error("matchText异常");
-	}
-	const plainTextAst: MdAst = {
-		rowType: RowType.Inline,
-		type: "Text",
-		value: (matchText && matchText[0]) || "",
-		children: [],
-	};
-	parent.children.push(plainTextAst);
-	advanceBy(context, matchText[0].length);
-	return plainTextAst;
+	return undefined;
 }
 
 function parseQuote(context: ParseContext, ancestors: MdAst[]) {
-	if (!context.source.startsWith("> ")) {
-		return parseText(context, ancestors);
+	const pattern = /^\>\s/;
+	if (!pattern.test(context.source)) {
+		// 不符合语法规则，当成普通文本处理
+		return;
 	}
 	// Quote State
 	const quoteAst: MdAst = {
@@ -230,24 +96,39 @@ function parseQuote(context: ParseContext, ancestors: MdAst[]) {
 		rowType: RowType.Block,
 		children: [],
 	};
+	ancestors.push(quoteAst);
 
-	let source = "";
-	while (!isNext(context) && !isEnd(context)) {
-		let s = context.source.match(/.+/)?.[0] || "";
-		advanceBy(context, s.length);
-		source += s.slice(2) + "\n"; // remove '> '
+	const source = /\>\s+(.[\r\n]?)*/.exec(context.source)?.[0] || "";
+	advanceBy(context, source.length);
+	const arr = source.replace(/\r/g, "\n").split("\n");
+	arr.forEach((item, index) => {
+		if (!/^\>\s+/.test(item)) {
+			arr[index - 1] += item;
+			arr[index] = "";
+		}
+	});
+	const children = arr.filter((i) => !!i && !/^[\r\n\s\t]*$/.test(i));
+	for (let i = 0; i < children.length; i++) {
+		const textAst: MdAst = {
+			type: "Text",
+			rowType: RowType.Block,
+			children: [],
+		};
+		ancestors.push(textAst);
+		quoteAst.children.push(textAst);
+		const matchOrder = /^\>\s+/.exec(children[i])?.[0] || "";
+		parseMarkdown(
+			{
+				...context,
+				source: children[i].slice(matchOrder.length),
+			},
+			ancestors
+		);
+		ancestors.pop();
 	}
 
-	ancestors.push(quoteAst);
-	parseMarkdown(
-		{
-			...context,
-			source,
-		},
-		ancestors
-	);
 	ancestors.pop();
-	// advanceBy(context, source.length)
+
 	return quoteAst;
 }
 
