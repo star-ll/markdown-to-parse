@@ -1,5 +1,6 @@
 import { MdAst, MdAstType, RowType, MdTextAst } from "./../types/ast.d";
 import { parseImage } from "./img.js";
+import { parseLink } from "./link.js";
 import { parseText, parseTitle } from "./text.js";
 export type ParseContext = {
 	source: string;
@@ -40,7 +41,13 @@ export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
 		} else if (/\-/.test(context.source[0])) {
 			node = parseUnOrderedList(context, ancestors);
 		} else if (context.source[0] === "!") {
-			node = parseExclamatory(context, ancestors);
+			if (/^\!\[/.test(context.source)) {
+				node = parseImage(context, ancestors);
+			}
+		} else if (context.source[0] === "[") {
+			if (/^\[.*\]\(.+\)/.test(context.source)) {
+				node = parseLink(context, ancestors);
+			}
 		}
 
 		if (!node) {
@@ -74,14 +81,6 @@ function createRootAst(): MdAst {
 		rowType: RowType.Root,
 		children: [],
 	};
-}
-
-function parseExclamatory(context: ParseContext, ancestors: MdAst[]) {
-	if (/^\!\[/.test(context.source)) {
-		return parseImage(context, ancestors);
-	}
-
-	return undefined;
 }
 
 function parseQuote(context: ParseContext, ancestors: MdAst[]) {

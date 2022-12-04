@@ -6,7 +6,7 @@ export function parseImage(context: ParseContext, ancestors: MdAst[]) {
 	const pattern = /^\!\[(.*)\]\((.+)\)/;
 	const [matchText, name, url] = pattern.exec(context.source) || [];
 	advanceBy(context, matchText?.length || 0);
-	const ImageAst: MdAst = {
+	const imageAst: MdAst = {
 		type: "Image",
 		rowType: RowType.Block,
 		children: [],
@@ -15,5 +15,5 @@ export function parseImage(context: ParseContext, ancestors: MdAst[]) {
 			url,
 		},
 	};
-	return ImageAst;
+	return imageAst;
 }

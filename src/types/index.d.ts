@@ -15,7 +15,7 @@ export type TransformContext = {
 	rootAst: HtmlAst
 	parent: ElementAst;
 	childIndex: number;
-	transformPlugins: ((node: MdAst , context: TransformContext) => void)[];
+	transformPlugins: {[fnName: string]: ((node: MdAst , context: TransformContext) => void)};
 };
 
 

@@ -17,7 +17,8 @@ export type MdAstType =
 	| "OrderedListItem"
 	| "UnorderedList"
 	| "UnorderedListItem"
-	| "Image";
+	| "Image"
+	| "Link";
 
 export const enum RowType {
 	Root,
