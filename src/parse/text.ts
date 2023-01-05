@@ -1,5 +1,6 @@
+import { ParseContext } from './../types/index.d';
 import { MdAst, MdAstType, MdTextAst, RowType } from "../types/ast";
-import { advanceBy, isEnd, ParseContext } from "./parse.js";
+import { advanceBy, isEnd } from "./parse.js";
 
 export function parseTitle(context: ParseContext, ancestors: MdAst[]) {
 	let titleLevel = 0;
@@ -54,7 +55,10 @@ function parseTextChild(context: ParseContext, parent: MdTextAst) {
 			parseStressText(context, parent);
 		} else if (context.source[0] === "`") {
 			parseInlineCode(context, parent);
-		} else {
+		}else if (/^\[.*\]\(.+\)/.test(context.source)) {
+			parseLink(context, parent);
+		}
+		else {
 			parsePlainText(context, parent);
 		}
 	}
@@ -145,4 +149,22 @@ function parsePlainText(
 	parent.children.push(plainTextAst);
 	advanceBy(context, matchText[0].length);
 	return plainTextAst;
+}
+
+
+export function parseLink(context: ParseContext, parent: MdAst) {
+	// Link State
+	const pattern = /^\[(.*)\]\((.+)\)/;
+	const [matchText, name, url] = pattern.exec(context.source) || [];
+	advanceBy(context, matchText?.length || 0);
+	const linkAst: MdAst = {
+		type: "Link",
+		rowType: RowType.Inline,
+		children: [],
+		meta: {
+			name,
+			url,
+		},
+	};
+	parent.children.push(linkAst);
 }

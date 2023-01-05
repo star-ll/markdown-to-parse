@@ -1,25 +1,34 @@
-import { MdAst, MdAstType, RowType, MdTextAst } from "./../types/ast.d";
+import { ParseContext } from "./../types/index.d";
+import { MdAst, RowType } from "./../types/ast.d";
 import { parseImage } from "./img.js";
-import { parseLink } from "./link.js";
 import { parseText, parseTitle } from "./text.js";
-export type ParseContext = {
-	source: string;
-	originalSource: string;
-};
+import { errorHandler } from "../errorHandler/index.js";
 
 export function createParseContext(source: string): ParseContext {
 	const context = {
 		source: source.replace(/\r\n/g, "\n"),
-		originalSource: source,
+		originalSource: source.replace(/\r\n/g, "\n"),
+		errorHandler: errorHandler(),
+		loc: {
+			startOffset: 0,
+			startRow: 0,
+			startCol: 0,
+		},
 	};
 	return context;
 }
 
-export function parse(md: string) {
-	const context = createParseContext(md);
+export async function parse(context: ParseContext) {
 	const root = createRootAst();
-	parseMarkdown(context, [root]);
-	return root;
+	try {
+		await parseMarkdown(context, [root]);
+		return root;
+	} catch (err) {
+		if (context.errorHandler._errors.length === 0) {
+			context.errorHandler.push(err as Error);
+		}
+		context.errorHandler.emitError("解析阶段出现异常：");
+	}
 }
 
 export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
@@ -44,10 +53,6 @@ export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
 			if (/^\!\[/.test(context.source)) {
 				node = parseImage(context, ancestors);
 			}
-		} else if (context.source[0] === "[") {
-			if (/^\[.*\]\(.+\)/.test(context.source)) {
-				node = parseLink(context, ancestors);
-			}
 		}
 
 		if (!node) {
@@ -61,7 +66,9 @@ export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
 }
 
 export function advanceBy(context: ParseContext, length: number) {
+	const s = context.source.slice(0, length);
 	context.source = context.source.slice(length);
+	// context.loc.startRow
 }
 
 export function isEnd(context: ParseContext) {

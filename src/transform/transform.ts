@@ -1,3 +1,4 @@
+import { errorHandler } from "../errorHandler/index.js";
 import { TransformContext } from "../types";
 import { ElementAst, HtmlAst, MdAst } from "../types/ast.d";
 import { transformInlineCode } from "./plugins/code.js";
@@ -20,8 +21,8 @@ import {
 	transformUnorderedListItem,
 } from "./plugins/unorderedList.js";
 
-export function transform(ast: MdAst) {
-	const context = createTransformContext(ast);
+export function transform(context: TransformContext) {
+	// const context: TransformContext = createTransformContext(ast);
 	const root = context.mdAst;
 	return baseTransform(root, context);
 }
@@ -52,7 +53,7 @@ export function baseTransform(node: MdAst, context: TransformContext) {
 	return context.rootAst;
 }
 
-function createTransformContext(ast: MdAst): TransformContext {
+export function createTransformContext(ast: MdAst): TransformContext {
 	const rootAst = createRootAst();
 	return {
 		// MdAst
@@ -78,6 +79,7 @@ function createTransformContext(ast: MdAst): TransformContext {
 			transformTitle,
 			transformPlainText,
 		},
+		errorHandler: errorHandler(),
 	};
 }
 

@@ -1,5 +1,6 @@
-import { MdAst, MdAstType, MdTextAst, RowType } from "../types/ast";
-import { advanceBy, ParseContext } from "./parse.js";
+import { ParseContext } from "./../types/index.d";
+import { MdAst, RowType } from "../types/ast";
+import { advanceBy } from "./parse.js";
 
 export function parseImage(context: ParseContext, ancestors: MdAst[]) {
 	// Image State

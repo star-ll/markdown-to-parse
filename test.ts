@@ -1,35 +1,41 @@
-import fs from "fs";
-import path from "path";
-import { generate } from "./src/generate/generate.js";
-import { parse } from "./src/parse/parse.js";
-import { transform } from "./src/transform/transform.js";
+// import fs from "fs";
+// import path from "path";
+// import { generate } from "./src/generate/generate.js";
+// import { parse } from "./src/parse/parse.js";
+// import { transform } from "./src/transform/transform.js";
 
-const md = fs.readFileSync(path.resolve("./test/hello.md")).toString();
+// async function test() {
+// 	const md = fs.readFileSync(path.resolve("./test/hello.md")).toString();
 
-console.time("parse");
-const ast = parse(md);
-console.timeEnd("parse");
+// 	console.time("parse");
+// 	const ast = await parse(md);
+// 	console.timeEnd("parse");
 
-fs.writeFileSync(
-	path.resolve("./test/hello.mdAst.json"),
-	JSON.stringify(ast, undefined, 2)
-);
+// 	if (!ast) {
+// 		return;
+// 	}
 
-console.time("transform");
-const transformResult = transform(ast);
-console.timeEnd("transform");
+// 	fs.writeFileSync(
+// 		path.resolve("./test/hello.mdAst.json"),
+// 		JSON.stringify(ast, undefined, 2)
+// 	);
 
-fs.writeFileSync(
-	path.resolve("./test/hello.transform.json"),
-	JSON.stringify(transformResult, undefined, 2)
-);
+// 	console.time("transform");
+// 	const transformResult = transform(ast);
+// 	console.timeEnd("transform");
 
-console.time("generate");
-const html = generate(transformResult);
-console.timeEnd("generate");
+// 	fs.writeFileSync(
+// 		path.resolve("./test/hello.transform.json"),
+// 		JSON.stringify(transformResult, undefined, 2)
+// 	);
 
-// console.log(html);
+// 	console.time("generate");
+// 	const html = generate(transformResult);
+// 	console.timeEnd("generate");
 
-fs.writeFileSync(path.resolve("./test/hello.html"), html);
+// 	// console.log(html);
 
-export { parse, transform, generate };
+// 	fs.writeFileSync(path.resolve("./test/hello.html"), html);
+// }
+
+// test();

@@ -93,13 +93,20 @@
       ],
       "childNodes": [
         {
-          "nodeName": "p",
-          "tagName": "p",
+          "nodeName": "div",
+          "tagName": "div",
           "attrs": [],
           "childNodes": [
             {
-              "nodeName": "#text",
-              "value": "这是一条引用"
+              "nodeName": "div",
+              "tagName": "div",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "这是一条引用"
+                }
+              ]
             }
           ]
         }
@@ -115,68 +122,110 @@
       ],
       "childNodes": [
         {
-          "nodeName": "p",
-          "tagName": "p",
+          "nodeName": "div",
+          "tagName": "div",
           "attrs": [],
           "childNodes": [
             {
-              "nodeName": "#text",
-              "value": "这是一条连续引用 1"
+              "nodeName": "div",
+              "tagName": "div",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "这是一条连续引用 1"
+                }
+              ]
             }
           ]
         },
         {
-          "nodeName": "p",
-          "tagName": "p",
+          "nodeName": "div",
+          "tagName": "div",
           "attrs": [],
           "childNodes": [
             {
-              "nodeName": "#text",
-              "value": "这是一条连续引用 2"
+              "nodeName": "div",
+              "tagName": "div",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "这是一条连续引用 2"
+                }
+              ]
             }
           ]
         },
         {
-          "nodeName": "p",
-          "tagName": "p",
+          "nodeName": "div",
+          "tagName": "div",
           "attrs": [],
           "childNodes": [
             {
-              "nodeName": "#text",
-              "value": "这是一条连续引用 3"
+              "nodeName": "div",
+              "tagName": "div",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "这是一条连续引用 3"
+                }
+              ]
             }
           ]
         },
         {
-          "nodeName": "p",
-          "tagName": "p",
+          "nodeName": "div",
+          "tagName": "div",
           "attrs": [],
           "childNodes": [
             {
-              "nodeName": "#text",
-              "value": "这是一条连续引用 4"
+              "nodeName": "div",
+              "tagName": "div",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "这是一条连续引用 4"
+                }
+              ]
             }
           ]
         },
         {
-          "nodeName": "p",
-          "tagName": "p",
+          "nodeName": "div",
+          "tagName": "div",
           "attrs": [],
           "childNodes": [
             {
-              "nodeName": "#text",
-              "value": "这是一条连续引用 5"
+              "nodeName": "div",
+              "tagName": "div",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "这是一条连续引用 5"
+                }
+              ]
             }
           ]
         },
         {
-          "nodeName": "p",
-          "tagName": "p",
+          "nodeName": "div",
+          "tagName": "div",
           "attrs": [],
           "childNodes": [
             {
-              "nodeName": "#text",
-              "value": "这是一条连续引用 6"
+              "nodeName": "div",
+              "tagName": "div",
+              "attrs": [],
+              "childNodes": [
+                {
+                  "nodeName": "#text",
+                  "value": "这是一条连续引用 6"
+                }
+              ]
             }
           ]
         }
@@ -219,8 +268,8 @@
           "attrs": [],
           "childNodes": [
             {
-              "nodeName": "p",
-              "tagName": "p",
+              "nodeName": "div",
+              "tagName": "div",
               "attrs": [],
               "childNodes": [
                 {
@@ -237,8 +286,8 @@
           "attrs": [],
           "childNodes": [
             {
-              "nodeName": "p",
-              "tagName": "p",
+              "nodeName": "div",
+              "tagName": "div",
               "attrs": [],
               "childNodes": [
                 {
@@ -255,8 +304,8 @@
           "attrs": [],
           "childNodes": [
             {
-              "nodeName": "p",
-              "tagName": "p",
+              "nodeName": "div",
+              "tagName": "div",
               "attrs": [],
               "childNodes": [
                 {
@@ -266,8 +315,8 @@
               ]
             },
             {
-              "nodeName": "p",
-              "tagName": "p",
+              "nodeName": "div",
+              "tagName": "div",
               "attrs": [],
               "childNodes": [
                 {
@@ -309,8 +358,8 @@
                   "attrs": [],
                   "childNodes": [
                     {
-                      "nodeName": "p",
-                      "tagName": "p",
+                      "nodeName": "div",
+                      "tagName": "div",
                       "attrs": [],
                       "childNodes": [
                         {
@@ -338,8 +387,8 @@
           "attrs": [],
           "childNodes": [
             {
-              "nodeName": "p",
-              "tagName": "p",
+              "nodeName": "div",
+              "tagName": "div",
               "attrs": [],
               "childNodes": [
                 {
@@ -356,8 +405,8 @@
           "attrs": [],
           "childNodes": [
             {
-              "nodeName": "p",
-              "tagName": "p",
+              "nodeName": "div",
+              "tagName": "div",
               "attrs": [],
               "childNodes": [
                 {
@@ -374,8 +423,8 @@
           "attrs": [],
           "childNodes": [
             {
-              "nodeName": "p",
-              "tagName": "p",
+              "nodeName": "div",
+              "tagName": "div",
               "attrs": [],
               "childNodes": [
                 {
@@ -385,8 +434,8 @@
               ]
             },
             {
-              "nodeName": "p",
-              "tagName": "p",
+              "nodeName": "div",
+              "tagName": "div",
               "attrs": [],
               "childNodes": [
                 {
@@ -413,8 +462,8 @@
                   "attrs": [],
                   "childNodes": [
                     {
-                      "nodeName": "p",
-                      "tagName": "p",
+                      "nodeName": "div",
+                      "tagName": "div",
                       "attrs": [],
                       "childNodes": [
                         {

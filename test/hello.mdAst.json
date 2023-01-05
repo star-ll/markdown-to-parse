@@ -71,10 +71,16 @@
           "rowType": 1,
           "children": [
             {
-              "rowType": 2,
               "type": "Text",
-              "value": "这是一条引用",
-              "children": []
+              "rowType": 1,
+              "children": [
+                {
+                  "rowType": 2,
+                  "type": "Text",
+                  "value": "这是一条引用",
+                  "children": []
+                }
+              ]
             }
           ]
         }
@@ -89,10 +95,16 @@
           "rowType": 1,
           "children": [
             {
-              "rowType": 2,
               "type": "Text",
-              "value": "这是一条连续引用 1",
-              "children": []
+              "rowType": 1,
+              "children": [
+                {
+                  "rowType": 2,
+                  "type": "Text",
+                  "value": "这是一条连续引用 1",
+                  "children": []
+                }
+              ]
             }
           ]
         },
@@ -101,10 +113,16 @@
           "rowType": 1,
           "children": [
             {
-              "rowType": 2,
               "type": "Text",
-              "value": "这是一条连续引用 2",
-              "children": []
+              "rowType": 1,
+              "children": [
+                {
+                  "rowType": 2,
+                  "type": "Text",
+                  "value": "这是一条连续引用 2",
+                  "children": []
+                }
+              ]
             }
           ]
         },
@@ -113,10 +131,16 @@
           "rowType": 1,
           "children": [
             {
-              "rowType": 2,
               "type": "Text",
-              "value": "这是一条连续引用 3",
-              "children": []
+              "rowType": 1,
+              "children": [
+                {
+                  "rowType": 2,
+                  "type": "Text",
+                  "value": "这是一条连续引用 3",
+                  "children": []
+                }
+              ]
             }
           ]
         },
@@ -125,10 +149,16 @@
           "rowType": 1,
           "children": [
             {
-              "rowType": 2,
               "type": "Text",
-              "value": "这是一条连续引用 4",
-              "children": []
+              "rowType": 1,
+              "children": [
+                {
+                  "rowType": 2,
+                  "type": "Text",
+                  "value": "这是一条连续引用 4",
+                  "children": []
+                }
+              ]
             }
           ]
         },
@@ -137,10 +167,16 @@
           "rowType": 1,
           "children": [
             {
-              "rowType": 2,
               "type": "Text",
-              "value": "这是一条连续引用 5",
-              "children": []
+              "rowType": 1,
+              "children": [
+                {
+                  "rowType": 2,
+                  "type": "Text",
+                  "value": "这是一条连续引用 5",
+                  "children": []
+                }
+              ]
             }
           ]
         },
@@ -149,10 +185,16 @@
           "rowType": 1,
           "children": [
             {
-              "rowType": 2,
               "type": "Text",
-              "value": "这是一条连续引用 6",
-              "children": []
+              "rowType": 1,
+              "children": [
+                {
+                  "rowType": 2,
+                  "type": "Text",
+                  "value": "这是一条连续引用 6",
+                  "children": []
+                }
+              ]
             }
           ]
         }

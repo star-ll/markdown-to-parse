@@ -35,7 +35,7 @@
 <body>
     <div class="playground-box">
         <div class="user-input">
-            <textarea id="userInput"></textarea>
+            <textarea id="userInput" title="userInput"></textarea>
         </div>
         <div class="parse-box">
             <div class="parse-result" id="parseResult"></div>
@@ -43,24 +43,4 @@
     </div>
 
 </body>
-<script type="module">
-    import {parse, transform,generate} from "/dist/index.js"
-    const userInputEl = document.querySelector("#userInput")
-    const parseResultEl = document.querySelector("#parseResult")
-    function onChange(e){
-        // console.log();
-        if(e.key === 'Enter'){
-        const ast = parse(e.currentTarget.value);
-        console.log('ast',ast);
-        const htmlAst = transform(ast)
-        console.log('htmlAst',htmlAst);
-        const html = generate(htmlAst)
-        console.log('html',html);
-        parseResultEl.innerHTML = html
-        }
-        
-    }
-    userInputEl.addEventListener("keyup",onChange)
-</script>
-
 </html>
