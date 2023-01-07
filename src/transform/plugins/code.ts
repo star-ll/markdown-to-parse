@@ -1,4 +1,4 @@
-import { ElementAst, MdAst, RowType } from "./../../types/ast.d";
+import { ElementAst, MdAst, RowType, TextAst } from "./../../types/ast.d";
 import { TransformContext } from "../../types";
 
 export function transformInlineCode(node: MdAst, context: TransformContext) {
@@ -21,21 +21,30 @@ export function transformInlineCode(node: MdAst, context: TransformContext) {
 	context.parent.childNodes[context.childIndex] = ast;
 }
 
-export function transformInCodeBlock(node: MdAst, context: TransformContext) {
-	if (node.type !== "Code" || node.rowType !== RowType.Block) {
+export function transformCodeBlock(node: MdAst, context: TransformContext) {
+	if (node.type !== "CodeBlock" || node.rowType !== RowType.Block) {
 		return;
 	}
 
 	const ast: ElementAst = {
-		nodeName: "p",
-		tagName: "p",
-		attrs: [
-			{
-				style: "border-left: 4px solid #c9c9c9;padding-left: 1rem;",
-			},
-		],
+		nodeName: "pre",
+		tagName: "pre",
+		attrs: [],
 		childNodes: [],
 	};
+	const codeAst: ElementAst = {
+		nodeName: "code",
+		tagName: "code",
+		attrs: [],
+		childNodes: [],
+	};
+	const codeTextAst: TextAst = {
+		nodeName: "#text",
+		value: node.value || "",
+	};
+
+	codeAst.childNodes.push(codeTextAst);
+	ast.childNodes.push(codeAst);
 
 	context.parent.childNodes[context.childIndex] = ast;
 }

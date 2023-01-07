@@ -121,7 +121,7 @@ function parseInlineCode(context: ParseContext, parent: MdTextAst) {
 	advanceBy(context, matchText[0].length);
 	return codeAst;
 }
-function parsePlainText(
+export function parsePlainText(
 	context: ParseContext,
 	parent: MdTextAst,
 	length?: number

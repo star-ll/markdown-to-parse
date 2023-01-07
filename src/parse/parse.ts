@@ -3,6 +3,7 @@ import { MdAst, RowType } from "./../types/ast.d";
 import { parseImage } from "./img.js";
 import { parseText, parseTitle } from "./text.js";
 import { errorHandler } from "../errorHandler/index.js";
+import { parseCodeBlock } from "./codeBlock.js";
 
 export function createParseContext(source: string): ParseContext {
 	const context = {
@@ -41,6 +42,7 @@ export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
 		if (/^\n\n/.test(context.source)) {
 			advanceBy(context, 2);
 			loc(context, context.originalSource.length - context.source.length);
+			continue;
 		}
 
 		if (pattern.test(context.source[0])) {
@@ -54,6 +56,8 @@ export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
 			node = parseOrderedList(context, ancestors);
 		} else if (/\-/.test(context.source[0])) {
 			node = parseUnOrderedList(context, ancestors);
+		} else if (/^\`{3}/.test(context.source)) {
+			node = parseCodeBlock(context, ancestors);
 		} else if (context.source[0] === "!") {
 			if (/^\!\[/.test(context.source)) {
 				node = parseImage(context, ancestors);

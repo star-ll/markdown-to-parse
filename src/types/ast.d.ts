@@ -1,24 +1,28 @@
-export type MdAstType =
-	| "Root"
+export type TitleType =
 	| "Title1"
 	| "Title2"
 	| "Title3"
 	| "Title4"
 	| "Title5"
-	| "Title6"
+	| "Title6";
+
+export type MdAstType =
+	| "Root"
 	| "Text"
 	| "Bold"
 	| "Italic"
 	| "BoldAndItalic"
 	| "Underline"
 	| "Code"
+	| "CodeBlock"
 	| "Quote"
 	| "OrderedList"
 	| "OrderedListItem"
 	| "UnorderedList"
 	| "UnorderedListItem"
 	| "Image"
-	| "Link";
+	| "Link"
+	| TitleType;
 
 export const enum RowType {
 	Root,

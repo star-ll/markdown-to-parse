@@ -1,7 +1,7 @@
 import { errorHandler } from "../errorHandler/index.js";
 import { TransformContext } from "../types";
 import { ElementAst, HtmlAst, MdAst } from "../types/ast.d";
-import { transformInlineCode } from "./plugins/code.js";
+import { transformInlineCode, transformCodeBlock } from "./plugins/code.js";
 import { transformImage } from "./plugins/image.js";
 import { transformLink } from "./plugins/link.js";
 import {
@@ -75,6 +75,7 @@ export function createTransformContext(ast: MdAst): TransformContext {
 			transformItalic,
 			transformBoldAndItalic,
 			transformInlineCode,
+			transformCodeBlock,
 			transformTextBlock,
 			transformTitle,
 			transformPlainText,
