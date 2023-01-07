@@ -40,7 +40,7 @@ export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
 
 		if (/^\n\n/.test(context.source)) {
 			advanceBy(context, 2);
-			loc(context.originalSource.length - context.source.length);
+			loc(context, context.originalSource.length - context.source.length);
 		}
 
 		if (pattern.test(context.source[0])) {
