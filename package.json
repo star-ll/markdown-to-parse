@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "ts-node --project ./tsconfig.json --esm ./test.ts",
     "build": "tsc",
+    "build:watch": "tsc --watch",
     "playground": "tsc && webpack server -c ./playground/webpack.config.js"
   },
   "author": "",

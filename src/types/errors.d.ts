@@ -1,3 +1,4 @@
+import { Loc, ParseContext } from "./index.d";
 export enum ErrorTypes {
 	Parse,
 	Transform,
@@ -6,22 +7,24 @@ export enum ErrorTypes {
 
 export type ErrorType = {
 	message?: string;
-	loc: {
-		startOffset: number;
-		startRow: number;
-		startCol: number;
-	};
+	loc: Loc;
 };
+
+export interface ParseError {
+	error: ErrorType | Error;
+	errText: string;
+	context: ParseContext;
+}
 
 export interface ThrowError {
 	message: string;
-	errors: (ErrorType | Error)[];
+	errors: ParseError[];
 	__isMdError: true;
 }
 
 export interface ErrorHandler {
-	_errors: (ErrorType | Error)[];
-	push: (err: ErrorType | Error) => ErrorHandler;
+	_errors: ParseError[];
+	push: (err: ErrorType | Error, context: ParseContext) => ErrorHandler;
 	isEmpty: () => boolean;
 	emitError: (message: string) => never;
 }

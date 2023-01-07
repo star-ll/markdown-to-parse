@@ -6,16 +6,23 @@ export type Context = {
 	errorHandler: ErrorHandler;
 };
 
-export type TransformPluginFn = (node: MdAst, context: TransformContext) => void
+export type TransformPluginFn = (
+	node: MdAst,
+	context: TransformContext
+) => void;
+
+export type Loc = {
+	startOffset: number;
+	endOffset: number;
+	offset?: number;
+	startRow?: number;
+	endRow?: number;
+};
 
 export type ParseContext = {
 	source: string;
 	originalSource: string;
-	loc: {
-		startOffset: number;
-		startRow: number;
-		startCol: number;
-	};
+	loc: Loc;
 } & Context;
 
 export type TransformContext = {

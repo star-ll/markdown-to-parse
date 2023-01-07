@@ -11,8 +11,7 @@ export function createParseContext(source: string): ParseContext {
 		errorHandler: errorHandler(),
 		loc: {
 			startOffset: 0,
-			startRow: 0,
-			startCol: 0,
+			endOffset: source.length - 1,
 		},
 	};
 	return context;
@@ -24,11 +23,12 @@ export async function parse(context: ParseContext) {
 		await parseMarkdown(context, [root]);
 		return root;
 	} catch (err) {
-		if (context.errorHandler._errors.length === 0) {
-			context.errorHandler.push(err as Error);
-		}
-		context.errorHandler.emitError("解析阶段出现异常：");
+		context.errorHandler.push(
+			err as Error,
+			JSON.parse(JSON.stringify(context))
+		);
 	}
+	context.errorHandler.emitError("解析阶段出现异常");
 }
 
 export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
@@ -37,6 +37,11 @@ export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
 	while (!isEnd(context)) {
 		let node: MdAst | undefined;
 		const parent = ancestors[ancestors.length - 1];
+
+		if (/^\n\n/.test(context.source)) {
+			advanceBy(context, 2);
+			loc(context.originalSource.length - context.source.length);
+		}
 
 		if (pattern.test(context.source[0])) {
 			advanceBy(context, 1);
@@ -66,9 +71,23 @@ export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
 }
 
 export function advanceBy(context: ParseContext, length: number) {
-	const s = context.source.slice(0, length);
 	context.source = context.source.slice(length);
-	// context.loc.startRow
+}
+
+function loc(context: ParseContext, startIndex: number, endIndex?: number) {
+	// context.loc.startOffset += context.source.length;
+	// context.loc.endOffset =
+	// 	endLength != null
+	// 		? context.loc.startOffset + endLength
+	// 		: context.loc.startOffset +
+	// 		  (context.source.match(/\n\n/)?.index || context.source.length);
+
+	context.loc.startOffset = startIndex;
+	context.loc.endOffset =
+		endIndex ||
+		(context.source.indexOf("\n\n") > -1
+			? startIndex + context.source.indexOf("\n\n")
+			: context.originalSource.length - 1);
 }
 
 export function isEnd(context: ParseContext) {
@@ -105,7 +124,11 @@ function parseQuote(context: ParseContext, ancestors: MdAst[]) {
 	ancestors.push(quoteAst);
 
 	const source = /\>\s+(.[\r\n]?)*/.exec(context.source)?.[0] || "";
+
+	const len = context.originalSource.length - context.source.length;
+	loc(context, len, len + source.length);
 	advanceBy(context, source.length);
+
 	const arr = source.replace(/\r/g, "\n").split("\n");
 	arr.forEach((item, index) => {
 		if (!/^\>\s+/.test(item)) {
@@ -157,7 +180,11 @@ export function parseOrderedList(context: ParseContext, ancestors: MdAst[]) {
 	ancestors.push(orderedListAst);
 
 	const source = /[0-9]\.\s+(.[\r\n]?)*/.exec(context.source)?.[0] || "";
+
+	const len = context.originalSource.length - context.source.length;
+	loc(context, len, len + source.length);
 	advanceBy(context, source.length);
+
 	const arr = source.replace(/\r/g, "\n").split("\n");
 	arr.forEach((item, index) => {
 		if (!/^[0-9]+\.\s+/.test(item)) {
@@ -205,7 +232,11 @@ export function parseUnOrderedList(context: ParseContext, ancestors: MdAst[]) {
 	ancestors.push(unorderedListAst);
 
 	const source = /\-\s+(.[\r\n]?)*/.exec(context.source)?.[0] || "";
+
+	const len = context.originalSource.length - context.source.length;
+	loc(context, len, len + source.length);
 	advanceBy(context, source.length);
+
 	const arr = source.replace(/\r/g, "\n").split("\n");
 	arr.forEach((item, index) => {
 		if (!/^\-\s+/.test(item)) {

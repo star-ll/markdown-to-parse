@@ -1,4 +1,4 @@
-import { ParseContext } from './../types/index.d';
+import { ParseContext } from "./../types/index.d";
 import { MdAst, MdAstType, MdTextAst, RowType } from "../types/ast";
 import { advanceBy, isEnd } from "./parse.js";
 
@@ -55,10 +55,9 @@ function parseTextChild(context: ParseContext, parent: MdTextAst) {
 			parseStressText(context, parent);
 		} else if (context.source[0] === "`") {
 			parseInlineCode(context, parent);
-		}else if (/^\[.*\]\(.+\)/.test(context.source)) {
+		} else if (/^\[.*\]\(.+\)/.test(context.source)) {
 			parseLink(context, parent);
-		}
-		else {
+		} else {
 			parsePlainText(context, parent);
 		}
 	}
@@ -110,7 +109,7 @@ function parseInlineCode(context: ParseContext, parent: MdTextAst) {
 	const pattern = /^[\`]([^*\r\n\f]+)[\`]/;
 	const matchText = context.source.match(pattern);
 	if (!matchText) {
-		throw new Error("matchText异常");
+		throw new Error("解析code异常");
 	}
 	const codeAst: MdAst = {
 		rowType: RowType.Inline,
@@ -133,24 +132,24 @@ function parsePlainText(
 	}
 
 	const pattern = /^[^\r\n\f`*]+/;
-	const matchText =
+	let matchText =
 		length == null
 			? context.source.match(pattern)
 			: context.source.slice(0, length);
-	if (!matchText) {
-		throw new Error("matchText异常");
-	}
+
+	matchText = !matchText
+		? context.source.slice(0, length)
+		: matchText?.[0] || "";
 	const plainTextAst: MdAst = {
 		rowType: RowType.Inline,
 		type: "Text",
-		value: (matchText && matchText[0]) || "",
+		value: matchText,
 		children: [],
 	};
 	parent.children.push(plainTextAst);
-	advanceBy(context, matchText[0].length);
+	advanceBy(context, matchText.length);
 	return plainTextAst;
 }
-
 
 export function parseLink(context: ParseContext, parent: MdAst) {
 	// Link State
