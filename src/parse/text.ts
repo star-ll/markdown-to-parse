@@ -56,6 +56,7 @@ function parseTextChild(context: ParseContext, parent: MdTextAst) {
 		} else if (context.source[0] === "`") {
 			parseInlineCode(context, parent);
 		} else if (/^\[.*\]\(.+\)/.test(context.source)) {
+			
 			parseLink(context, parent);
 		} else {
 			parsePlainText(context, parent);
@@ -131,7 +132,7 @@ export function parsePlainText(
 		return;
 	}
 
-	const pattern = /^[^\r\n\f`*]+/;
+	const pattern = /^[^\r\n\f`*\[\!]+/;
 	let matchText =
 		length == null
 			? context.source.match(pattern)
