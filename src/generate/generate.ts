@@ -27,7 +27,7 @@ export function baseGenerate(context: GenerateContext) {
 		// element
 		context.source += `<${currentNode.tagName}${handleAttrs(
 			currentNode.attrs
-		)}>`;
+		)}${currentNode.isSelfClose ? "/>" : ">"}`;
 		for (let i = 0; i < currentNode.childNodes.length; i++) {
 			const child = currentNode.childNodes[i];
 			context.parent = currentNode;
@@ -36,6 +36,8 @@ export function baseGenerate(context: GenerateContext) {
 			context.parent = parent;
 			context.currentNode = currentNode;
 		}
-		context.source += `</${currentNode.tagName}>`;
+		if (currentNode.isSelfClose) {
+			context.source += `</${currentNode.tagName}>`;
+		}
 	}
 }

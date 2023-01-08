@@ -3,6 +3,7 @@ import {
 	ParseContext,
 	TransformPluginFn,
 	GenerateContext,
+	Config,
 } from "./src/types/index.d";
 import { HtmlAst, MdAst } from "./src/types/ast.d";
 import { createGenerateContext, generate } from "./src/generate/generate.js";
@@ -22,16 +23,16 @@ export class MarkdownParse {
 		this.parseContext = createParseContext(source);
 		return parse(this.parseContext);
 	}
-	transform(ast: MdAst) {
+	transform(ast: MdAst, config?: Partial<Config>) {
 		this.transformContext = createTransformContext(ast);
 		this.mergeTransformContext();
-		return transform(this.transformContext);
+		const context = { ...(config || {}), ...this.transformContext };
+		return transform(context);
 	}
 	generate(ast: HtmlAst) {
 		this.generateContext = createGenerateContext(ast);
-		const { source: value, root: rootNode } = generate(
-			this.generateContext
-		);
+		const context = this.generateContext;
+		const { source: value, root: rootNode } = generate(context);
 
 		return {
 			rootNode,

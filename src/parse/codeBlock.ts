@@ -1,7 +1,6 @@
 import { MdAst, RowType } from "./../types/ast.d";
 import { ParseContext } from "./../types/index.d";
 import { advanceBy } from "./parse.js";
-import { parsePlainText } from "./text.js";
 
 export function parseCodeBlock(context: ParseContext, ancestors: MdAst[]) {
 	// CodeBlock State

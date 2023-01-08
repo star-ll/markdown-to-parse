@@ -26,6 +26,11 @@ export function transformCodeBlock(node: MdAst, context: TransformContext) {
 		return;
 	}
 
+	let code = node.value || "";
+	if (context.highlight) {
+		code = context.highlight(code, node.meta?.language || "");
+	}
+
 	const ast: ElementAst = {
 		nodeName: "pre",
 		tagName: "pre",
@@ -40,8 +45,12 @@ export function transformCodeBlock(node: MdAst, context: TransformContext) {
 	};
 	const codeTextAst: TextAst = {
 		nodeName: "#text",
-		value: node.value || "",
+		value: code,
 	};
+
+	if (context.highlight) {
+		ast.attrs.push({ class: "hljs" });
+	}
 
 	codeAst.childNodes.push(codeTextAst);
 	ast.childNodes.push(codeAst);

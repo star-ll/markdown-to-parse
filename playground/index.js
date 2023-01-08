@@ -1,6 +1,6 @@
 // import hljs from "highlight.js";
 
-import 'highlight.js/styles/atom-one-dark.css'
+import 'highlight.js/styles/atom-one-dark-reasonable.css'
 
 import markdownParse from '../dist/index.js'
 import hljs from 'highlight.js'
@@ -12,7 +12,14 @@ async function onChange (e) {
     const ast = await markdownParse.parse(e.currentTarget.value)
     console.log('ast', ast)
 
-    const htmlAst = markdownParse.transform(ast)
+    const htmlAst = markdownParse.transform(ast, {
+      highlight: (code, lang) => {
+        if (hljs.getLanguage(lang)) {
+          return hljs.highlight(code, { language: lang }).value
+        }
+        return code
+      }
+    })
     console.log('htmlAst', htmlAst)
 
     const html = markdownParse.generate(htmlAst).value

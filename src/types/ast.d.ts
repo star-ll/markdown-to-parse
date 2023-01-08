@@ -50,6 +50,7 @@ export type ElementAst = {
 	tagName: string;
 	attrs: any[];
 	childNodes: (ElementAst | TextAst)[];
+	isSelfClose?: boolean;
 };
 
 export type TextAst = {

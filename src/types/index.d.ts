@@ -36,7 +36,8 @@ export type TransformContext = {
 	transformPlugins: {
 		[fnName: string]: TransformPluginFn;
 	};
-} & Context;
+} & Context &
+	Partial<Config>;
 
 export type GenerateContext = {
 	root: HtmlAst;
@@ -44,3 +45,7 @@ export type GenerateContext = {
 	currentNode: HtmlAst;
 	source: string;
 } & Context;
+
+export type Config = {
+	highlight: (code: string, lang: string) => string;
+};
