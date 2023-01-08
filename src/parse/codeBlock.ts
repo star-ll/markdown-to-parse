@@ -4,7 +4,7 @@ import { advanceBy } from "./parse.js";
 
 export function parseCodeBlock(context: ParseContext, ancestors: MdAst[]) {
 	// CodeBlock State
-	const pattern = /^\`{3}([a-zA-Z]*)(.*\n*)*\`{3}/;
+	const pattern = /^\`{3}([a-zA-Z]*)\n?((.*\n*)*)\`{3}/;
 	const matchText = context.source.match(pattern);
 
 	if (!matchText) {
