@@ -36,7 +36,7 @@ export function baseGenerate(context: GenerateContext) {
 			context.parent = parent;
 			context.currentNode = currentNode;
 		}
-		if (currentNode.isSelfClose) {
+		if (!currentNode.isSelfClose) {
 			context.source += `</${currentNode.tagName}>`;
 		}
 	}
