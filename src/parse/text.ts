@@ -56,8 +56,9 @@ function parseTextChild(context: ParseContext, parent: MdTextAst) {
 		} else if (context.source[0] === "`") {
 			parseInlineCode(context, parent);
 		} else if (/^\[.*\]\(.+\)/.test(context.source)) {
-			
 			parseLink(context, parent);
+		} else if (/^\~{2}.+\~{2}/.test(context.source)) {
+			parseDeleteLine(context, parent);
 		} else {
 			parsePlainText(context, parent);
 		}
@@ -132,19 +133,20 @@ export function parsePlainText(
 		return;
 	}
 
-	const pattern = /^[^\r\n\f`*\[\!]+/;
+	const pattern = /^[^\r\n\f`*~\[\!]+/;
 	let matchText =
 		length == null
-			? context.source.match(pattern)
+			? context.source.match(pattern)?.[0]
 			: context.source.slice(0, length);
 
-	matchText = !matchText
-		? context.source.slice(0, length)
-		: matchText?.[0] || "";
+	if (!matchText) {
+		return;
+	}
+
 	const plainTextAst: MdAst = {
 		rowType: RowType.Inline,
 		type: "Text",
-		value: matchText,
+		value:  matchText,
 		children: [],
 	};
 	parent.children.push(plainTextAst);
@@ -167,4 +169,21 @@ export function parseLink(context: ParseContext, parent: MdAst) {
 		},
 	};
 	parent.children.push(linkAst);
+}
+
+export function parseDeleteLine(context: ParseContext, parent: MdAst) {
+	const pattern = /^\~{2}(.+)\~{2}/;
+	const [matchText, text] = pattern.exec(context.source) || [];
+	
+	const deleteLineAst: MdAst = {
+		type: "DeleteLine",
+		rowType: RowType.Inline,
+		children: [],
+	};
+
+	advanceBy(context, 2);
+	parsePlainText(context, deleteLineAst, text.length);
+	advanceBy(context, 2);
+
+	parent.children.push(deleteLineAst);
 }

@@ -41,7 +41,7 @@ const html = markdownParse.generate(htmlAst).value
 - [x] 有序列表与无序列表
 - [x] 代码块和代码高亮
 - [ ] 图片和链接
-- [ ] 删除线和分割线
+- [x] 删除线和分割线
 - [ ] 任务列表
 - [ ] 转义语句
 - [ ] 异常处理机制

@@ -55,7 +55,11 @@ export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
 		} else if (/[0-9]/.test(context.source[0])) {
 			node = parseOrderedList(context, ancestors);
 		} else if (/\-/.test(context.source[0])) {
-			node = parseUnOrderedList(context, ancestors);
+			if (/^\-{3}\n/.test(context.source)) {
+				node = parseSeparateLine(context, ancestors);
+			} else {
+				node = parseUnOrderedList(context, ancestors);
+			}
 		} else if (/^\`{3}/.test(context.source)) {
 			node = parseCodeBlock(context, ancestors);
 		} else if (context.source[0] === "!") {
@@ -271,4 +275,23 @@ export function parseUnOrderedList(context: ParseContext, ancestors: MdAst[]) {
 	ancestors.pop();
 
 	return unorderedListAst;
+}
+
+function parseSeparateLine(context: ParseContext, ancestors: MdAst[]) {
+	const pattern = /^\-{3}\n/;
+
+	const matchText = context.source.match(pattern);
+	if (!matchText) {
+		return;
+	}
+
+	advanceBy(context, matchText[0].length);
+
+	const separateLineAst: MdAst = {
+		type: "SeparateLine",
+		rowType: RowType.Block,
+		children: [],
+	};
+
+	return separateLineAst;
 }

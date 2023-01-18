@@ -22,6 +22,8 @@ export type MdAstType =
 	| "UnorderedListItem"
 	| "Image"
 	| "Link"
+	| "SeparateLine"
+	| "DeleteLine"
 	| TitleType;
 
 export const enum RowType {

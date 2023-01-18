@@ -4,6 +4,8 @@ import { ElementAst, HtmlAst, MdAst } from "../types/ast.d";
 import { transformInlineCode, transformCodeBlock } from "./plugins/code.js";
 import { transformImage } from "./plugins/image.js";
 import { transformLink } from "./plugins/link.js";
+import { transformSeparateLine } from "./plugins/separateLine.js";
+import { transformDeleteLine } from "./plugins/deleteLine.js";
 import {
 	transformOrderedList,
 	transformOrderedListItem,
@@ -64,6 +66,8 @@ export function createTransformContext(ast: MdAst): TransformContext {
 		parent: rootAst,
 		childIndex: 0,
 		transformPlugins: {
+			transformDeleteLine,
+			transformSeparateLine,
 			transformLink,
 			transformImage,
 			transformUnorderedList,
