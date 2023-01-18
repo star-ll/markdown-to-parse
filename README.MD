@@ -6,6 +6,12 @@
 
 工作原理是利用**有限状态自动机**解析(parse)markdown语法为Markdown AST，通过转换(transform)将Markdown AST转换成HTML AST，之后渲染(generate)成HTML文件。
 
+## Demo
+
+```
+npm run playground
+```
+
 ## HighLight
 
 代码块高亮功能借助[highlight.js](https://highlightjs.org/)实现，你需要引入`highlight.js`到你的项目中。
@@ -39,6 +45,7 @@ const html = markdownParse.generate(htmlAst).value
 - [ ] 任务列表
 - [ ] 转义语句
 - [ ] 异常处理机制
+- [x] playground
 - [ ] 表格
 - [ ] html语句
 - [ ] toc目录  
