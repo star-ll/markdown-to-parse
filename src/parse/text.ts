@@ -49,7 +49,9 @@ export function parseText(context: ParseContext, ancestors: MdAst[]): MdAst {
 	return textAst;
 }
 
-function parseTextChild(context: ParseContext, parent: MdTextAst) {
+async function parseTextChild(context: ParseContext, parent: MdTextAst) {
+	const escapeLoop = context.errorHandler.escapeLoop();
+
 	while (!/[\r\n\f]/.test(context.source[0]) && !isEnd(context)) {
 		if (context.source[0] === "*") {
 			parseStressText(context, parent);
@@ -57,10 +59,20 @@ function parseTextChild(context: ParseContext, parent: MdTextAst) {
 			parseInlineCode(context, parent);
 		} else if (/^\[.*\]\(.+\)/.test(context.source)) {
 			parseLink(context, parent);
-		} else if (/^\~{2}.+\~{2}/.test(context.source)) {
+		} else if (context.source[0] === '~') {
 			parseDeleteLine(context, parent);
 		} else {
 			parsePlainText(context, parent);
+		}
+
+		try {
+			await escapeLoop.compare(context.source);
+		} catch (reason) {
+			context.errorHandler.push(
+				new Error(reason as string),
+				JSON.parse(JSON.stringify(context))
+			);
+			break;
 		}
 	}
 }
@@ -146,7 +158,7 @@ export function parsePlainText(
 	const plainTextAst: MdAst = {
 		rowType: RowType.Inline,
 		type: "Text",
-		value:  matchText,
+		value: matchText,
 		children: [],
 	};
 	parent.children.push(plainTextAst);
@@ -174,7 +186,11 @@ export function parseLink(context: ParseContext, parent: MdAst) {
 export function parseDeleteLine(context: ParseContext, parent: MdAst) {
 	const pattern = /^\~{2}(.+)\~{2}/;
 	const [matchText, text] = pattern.exec(context.source) || [];
-	
+
+	if (!matchText) {
+		throw new Error("解析deleteLine异常");
+	}
+
 	const deleteLineAst: MdAst = {
 		type: "DeleteLine",
 		rowType: RowType.Inline,

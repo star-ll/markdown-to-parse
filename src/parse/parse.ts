@@ -24,6 +24,10 @@ export async function parse(context: ParseContext) {
 		await parseMarkdown(context, [root]);
 		return root;
 	} catch (err) {
+		if (typeof err === "string") {
+			err = new Error(err);
+		}
+		
 		context.errorHandler.push(
 			err as Error,
 			JSON.parse(JSON.stringify(context))
@@ -32,8 +36,10 @@ export async function parse(context: ParseContext) {
 	context.errorHandler.emitError("解析阶段出现异常");
 }
 
-export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
+export async function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
 	const pattern = /^[\r\n\f]/;
+
+	const escapeLoop = context.errorHandler.escapeLoop();
 
 	while (!isEnd(context)) {
 		let node: MdAst | undefined;
@@ -75,6 +81,9 @@ export function parseMarkdown(context: ParseContext, ancestors: MdAst[]) {
 		if (node) {
 			parent.children.push(node);
 		}
+
+		// 避免出现死循环
+		await escapeLoop.compare(context.source);
 	}
 }
 

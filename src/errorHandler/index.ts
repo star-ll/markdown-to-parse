@@ -41,6 +41,26 @@ export function errorHandler() {
 			};
 			throw throwObj;
 		},
+
+		escapeLoop() {
+			return {
+				warn: 0,
+				temp: undefined,
+				async compare(source: string) {
+					if (this.temp !== source) {
+						this.temp = source;
+						this.warn = 0;
+					} else {
+						this.warn++;
+					}
+
+					if (this.warn >= 3) {
+						return Promise.reject("陷入死循环");
+					}
+					return ''
+				},
+			};
+		},
 	};
 
 	return _errorHandler;

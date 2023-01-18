@@ -22,9 +22,16 @@ export interface ThrowError {
 	__isMdError: true;
 }
 
+export interface EscapeLoop {
+	warn: number;
+	temp: string | undefined;
+	compare: (source: string) => Promise<string>;
+}
+
 export interface ErrorHandler {
 	_errors: ParseError[];
 	push: (err: ErrorType | Error, context: ParseContext) => ErrorHandler;
 	isEmpty: () => boolean;
 	emitError: (message: string) => never;
+	escapeLoop: () => EscapeLoop;
 }
