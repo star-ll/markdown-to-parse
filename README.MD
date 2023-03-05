@@ -8,9 +8,21 @@
 
 ## Demo
 
-```
+```shell
 npm run playground
 ```
+
+## Contribution
+
+clone仓库，然后执行以下语句
+
+```shell
+npm i // 安装依赖
+npm run build:dev  // 以watch模式启动
+npm run playground // 打开playground进行测试
+```
+
+
 
 ## HighLight
 
@@ -47,9 +59,10 @@ const html = markdownParse.generate(htmlAst).value
 - [x] 异常处理机制
 - [x] playground
 - [ ] 表格
-- [ ] html语句
 - [ ] toc目录  
+- [ ] html语句
 - [ ] XSS防护
+- [ ] 单元测试
 
 ## Skills
 
