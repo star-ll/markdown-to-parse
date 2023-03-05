@@ -40,13 +40,22 @@ const html = markdownParse.generate(htmlAst).value
 - [x] 引用
 - [x] 有序列表与无序列表
 - [x] 代码块和代码高亮
-- [ ] 图片和链接
+- [x] 图片和链接
 - [x] 删除线和分割线
 - [ ] 任务列表
 - [ ] 转义语句
-- [ ] 异常处理机制
+- [x] 异常处理机制
 - [x] playground
 - [ ] 表格
 - [ ] html语句
 - [ ] toc目录  
 - [ ] XSS防护
+
+## Skills
+
+Typescript、Es6、Webpack、Babel...
+
+你可能需要了解的一些基本概念：
+- 有限状态自动机
+- 正则表达式
+- AST
