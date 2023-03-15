@@ -1,52 +1,50 @@
 <!DOCTYPE html>
 <html lang="zh">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>markdown演练场</title>
     <style>
-        body,
-        html {
-            margin: 0;
-            padding: 0;
-        }
+      body,
+      html {
+        margin: 0;
+        padding: 0;
+      }
 
-        .playground-box {
-            height: 100vh;
-            display: flex;
-        }
+      .playground-box {
+        height: 100vh;
+        display: flex;
+      }
 
-        .user-input>textarea {
-            height: 100%;
-            width: 50vw;
-            padding: 0.7em 1em;
-            box-sizing: border-box;
-        }
+      .user-input > textarea {
+        height: 100%;
+        width: 50vw;
+        padding: 0.7em 1em;
+        box-sizing: border-box;
+      }
 
-        .parse-box {
-            height: 100vh;
-            overflow-y: auto;
-        }
+      .parse-box {
+        height: 100vh;
+        overflow-y: auto;
+        padding: 1em;
+      }
 
-        .user-input,
-        .parse-box {
-            flex: 1
-        }
+      .user-input,
+      .parse-box {
+        flex: 1;
+      }
     </style>
-</head>
+  </head>
 
-<body>
+  <body>
     <div class="playground-box">
-        <div class="user-input">
-            <textarea id="userInput" title="userInput"></textarea>
-        </div>
-        <div class="parse-box">
-            <div class="parse-result" id="parseResult"></div>
-        </div>
+      <div class="user-input">
+        <textarea id="userInput" title="userInput"></textarea>
+      </div>
+      <div class="parse-box">
+        <div class="parse-result" id="parseResult"></div>
+      </div>
     </div>
-
-</body>
-
+  </body>
 </html>
