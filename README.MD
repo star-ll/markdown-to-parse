@@ -62,6 +62,7 @@ const html = markdownParse.generate(htmlAst).value;
 - [ ] 转义语句
 - [x] 异常处理机制
 - [x] playground
+- [ ] 自定义Class类名及自定义样式
 - [ ] 表格
 - [ ] toc 目录
 - [ ] html 语句

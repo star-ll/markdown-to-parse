@@ -1,0 +1,16 @@
+/* 行内代码 */
+code:not(pre code) {
+  padding: 0.4em 1em;
+  border-radius: 4px;
+  background-color: #22272f;
+  color: #fff;
+}
+
+/* 嵌套列表 */
+ul > li:has(ul) {
+  list-style: none;
+}
+
+ol > li:has(ol) {
+  list-style: none;
+}
