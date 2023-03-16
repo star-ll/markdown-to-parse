@@ -10,7 +10,3 @@ code:not(pre code) {
 ul > li:has(ul) {
   list-style: none;
 }
-
-ol > li:has(ol) {
-  list-style: none;
-}
